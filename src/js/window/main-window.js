@@ -1789,7 +1789,7 @@ const loadBoardUI = async () => {
 
       if (!board.audio) return
 
-      const choice = remote.dialog.showMessageBox({
+      const { response } = await remote.dialog.showMessageBox({
         type: 'question',
         buttons: ['Yes', 'No'],
         title: 'Confirm',
@@ -1798,7 +1798,7 @@ const loadBoardUI = async () => {
                  'NOTE: File will not be deleted from disk.'
       })
 
-      const shouldClear = (choice === 0)
+      const shouldClear = (response === 0)
 
       if (shouldClear) {
         // remove board’s audio object
