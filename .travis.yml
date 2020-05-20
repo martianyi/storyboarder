@@ -32,10 +32,10 @@ script:
         -v ~/.cache/electron:/root/.cache/electron \
         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
         electronuserland/builder:wine \
-        /bin/bash -c "npm install && npm prune && npm run dist:linux" \
-        /bin/bash -c "FFMPEG_BIN_TGZ=`npm pack @ffmpeg-installer/win32-x64` && mkdir -p node_modules/@ffmpeg-installer/win32-x64 && tar -zxvf $FFMPEG_BIN_TGZ -C node_modules/@ffmpeg-installer/win32-x64 --strip-components=1 && rm $FFMPEG_BIN_TGZ && rm -rf node_modules/@ffmpeg-installer/linux-x64 && ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true npm run dist:win"
+        /bin/bash -c "npm install && npm prune && npm run dist:linux -- --publish onTagOrDraft" \
+        /bin/bash -c "FFMPEG_BIN_TGZ=`npm pack @ffmpeg-installer/win32-x64` && mkdir -p node_modules/@ffmpeg-installer/win32-x64 && tar -zxvf $FFMPEG_BIN_TGZ -C node_modules/@ffmpeg-installer/win32-x64 --strip-components=1 && rm $FFMPEG_BIN_TGZ && rm -rf node_modules/@ffmpeg-installer/linux-x64 && ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true npm run dist:win -- --publish onTagOrDraft"
     else
-      npm run dist:mac
+      npm run dist:mac -- --publish onTagOrDraft
     fi
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
